@@ -3,6 +3,6 @@
 	public enum TypeUser
 	{
 		ADMIN = 0,
-		PASTOR = 1,
+		Admin = 1,
 	}
 }
