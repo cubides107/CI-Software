@@ -26,10 +26,10 @@ namespace CreditApp.Application.UsersServices.LoginUser
 
             user = await repository.Get<User>(x => x.Email == request.Email);
 
-            //encryptPassword = security.EncryptPassword(request.Password);
+            encryptPassword = security.EncryptPassword(request.Password);
 
-            //if (user.Password != encryptPassword)
-            //throw new Exception("La contraseña es incorrecta");
+            if (user.Password != encryptPassword)
+                throw new Exception("La contraseña es incorrecta");
 
             token = security.CreateToken(user.Id.ToString(), user.Names, user.Email, "Admin");
             user.TypeUser = TypeUser.Admin;

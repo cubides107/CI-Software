@@ -12,7 +12,6 @@ public class Tests
     private readonly Mock<IRepository> userRepository;
     private readonly Mock<ISecurity> userSecurity;
     
-
     public Tests()
     {
         userRepository = new Mock<IRepository>();
@@ -46,8 +45,10 @@ public class Tests
         var phone = "3138989123";
         var address = "Carrera 1 Este #33-34";
 
-        User user = new User("Julian cubides","cubides","cristian@gmailcom","234234");
-        User userUpdate = new("Julian cubides","cubides","cristian@gmailcom","234234");
+        User user = new User("Julian cubides","cubides","cristian@gmailcom","sfasdfwerfsdf");
+        User userUpdate = new("Julian cubides","cubides","cristian@gmailcom","sfasdfwerfsdf");
+        userUpdate.Token = token;
+        
         userRepository.Setup(x => x.Exists<User>(x => x.Email == request.Email))
             .Returns(true)
             .Verifiable();
@@ -58,6 +59,10 @@ public class Tests
 
         userSecurity.Setup(x => x.CreateToken(user.Id.ToString(), user.Names, user.Email, "Admin"))
             .Returns(newToken)
+            .Verifiable();
+
+        userSecurity.Setup(x=>x.EncryptPassword(request.Password))
+            .Returns(encryptPassword)
             .Verifiable();
 
 
@@ -72,4 +77,60 @@ public class Tests
 
        // Assert.Pass();
     }
+    /// <summary>
+    /// Se comprueba cuando el usuario no se encuentra registrado
+    /// </summary>
+    /// <returns></returns>
+    [TestMethod]
+    [ExpectedException(typeof(Exception))]
+    public async Task NotFoundUser()
+    {
+        var loginUserHandler = new LoginUserHandler(userRepository.Object, userSecurity.Object);
+        
+        var request = new LoginUserCommand()
+        {
+            Email = "cristian@gmail.com",
+            Password = "234234",
+        };
+
+        await loginUserHandler.Handle(request, new CancellationToken());
+    }
+    
+    /// <summary>
+    /// Se comprueba que la contraseña es incorrecta
+    /// </summary>
+    [TestMethod]
+    [ExpectedException(typeof(Exception))]
+    public async Task PasswordIncorrect()
+    {
+        var loginUserHandler = new LoginUserHandler(userRepository.Object, userSecurity.Object);
+        
+        var request = new LoginUserCommand()
+        {
+            Email = "cristian@gmail.com",
+            Password = "234234",
+        };
+        
+        User user = new User("Julian cubides","cubides","cristian@gmailcom","sfasdfwerfsdf");
+        var newToken = "jsusjsuj8983j45.";
+        var encryptPassword = "sfasdfwerfsdf34545";
+        
+        userRepository.Setup(x => x.Exists<User>(x => x.Email == request.Email))
+            .Returns(true)
+            .Verifiable();
+        
+        userRepository.Setup(x => x.Get<User>(x => x.Email == request.Email))
+            .ReturnsAsync(user)
+            .Verifiable();
+
+        userSecurity.Setup(x => x.CreateToken(user.Id.ToString(), user.Names, user.Email, "Admin"))
+            .Returns(newToken)
+            .Verifiable();
+
+        userSecurity.Setup(x=>x.EncryptPassword(request.Password))
+            .Returns(encryptPassword)
+            .Verifiable();
+        await loginUserHandler.Handle(request, new CancellationToken());
+    }
+    
 }
