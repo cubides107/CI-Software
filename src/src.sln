@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{2635FF51-253
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{81D7167D-8458-4A78-A3E2-88AF9CC74ED2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditApp.Domain", "backend\CreditApp.Domain\CreditApp.Domain.csproj", "{75E37227-9F4E-477B-9785-B38EC63632D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlace.Domain", "backend\MarketPlace.Domain\MarketPlace.Domain.csproj", "{75E37227-9F4E-477B-9785-B38EC63632D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditApp.Application", "backend\CreditApp.Application\CreditApp.Application.csproj", "{6AC1134D-7B98-46CD-BF30-4810E7DD919B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlace.Application", "backend\MarketPlace.Application\MarketPlace.Application.csproj", "{6AC1134D-7B98-46CD-BF30-4810E7DD919B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditApp.Infrastructure", "backend\CreditApp.Infrastructure\CreditApp.Infrastructure.csproj", "{F74194C8-7696-40CD-B7E3-F002C06FFB60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlace.Infrastructure", "backend\MarketPlace.Infrastructure\MarketPlace.Infrastructure.csproj", "{F74194C8-7696-40CD-B7E3-F002C06FFB60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "api\WebApp\WebApp.csproj", "{2D1F3E46-B39C-4463-8943-F62B2BE9F640}"
 EndProject

@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\backend\CreditApp.Application\CreditApp.Application.csproj" />
+      <ProjectReference Include="..\backend\MarketPlace.Application\MarketPlace.Application.csproj" />
     </ItemGroup>
 
 </Project>

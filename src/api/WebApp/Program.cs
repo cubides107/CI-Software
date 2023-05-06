@@ -1,10 +1,10 @@
-using CreditApp.Infrastructure.Startup;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using System.Text;
+using MarketPlace.Infrastructure.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 
