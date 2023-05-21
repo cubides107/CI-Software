@@ -53,7 +53,7 @@ namespace MarketPlace.Domain
 		/// <typeparam name="T"></typeparam>
 		/// <param name="expressionConditional"></param>
 		/// <returns></returns>
-		public Task<List<T>> GetAll<T>(Expression<Func<T, bool>> expressionConditional) where T : Entity;
+		public Task<List<T>> GetAll<T>() where T : Entity;
 
 		/// <summary>
 		/// Obtener lista de entidades con anidados

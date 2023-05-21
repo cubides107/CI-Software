@@ -77,12 +77,11 @@ namespace MarketPlace.Infrastructure.Repositories
 			}
 		}
 
-		public async Task<List<T>> GetAll<T>(Expression<Func<T, bool>> expressionConditional) where T : Entity
+		public async Task<List<T>> GetAll<T>() where T : Entity
 		{
 			try
 			{
 				return await context.Set<T>()
-					.Where(expressionConditional)
 					.ToListAsync();
 			}
 			catch (Exception e)
