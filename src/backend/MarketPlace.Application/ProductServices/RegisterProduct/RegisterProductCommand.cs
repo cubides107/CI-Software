@@ -10,7 +10,6 @@ public class RegisterProductCommand : IRequest<GetProductDTO>
     public double Price { get; set; }
     public String Description { get; set; }
     public List<Claim> Claims { get; set; }
-
     public int Stock;
     public String Reference;
 }

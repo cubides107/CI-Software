@@ -1,3 +1,6 @@
+using System.Security.Claims;
+using CreditApp.Application.ProductServices.GetAllProducts;
+using CreditApp.Application.ProductServices.GetProduct;
 using CreditApp.Application.ProductServices.RegisterProduct;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -33,6 +36,20 @@ public class ProductController : ControllerBase
             Stock = request.Stock,
             Reference = request.Reference,
             Claims = User.Claims.ToList()
+        };
+
+        var dto = await mediator.Send(command);
+
+        return Ok(dto);
+    }
+    
+    [HttpGet]
+    [Route("GetAllProducts")]
+    public async Task<IActionResult> GetAllProducts()
+    {
+        var command = new GetAllProductsCommand();
+        {
+            
         };
 
         var dto = await mediator.Send(command);

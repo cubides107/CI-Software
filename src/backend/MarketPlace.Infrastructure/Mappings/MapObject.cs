@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using CreditApp.Application.ProductServices.GetProduct;
 using MarketPlace.Domain;
+using MarketPlace.Domain.ProductEntities;
 
 namespace MarketPlace.Infrastructure.Mappings
 {
