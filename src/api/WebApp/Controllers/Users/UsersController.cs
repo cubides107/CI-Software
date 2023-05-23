@@ -90,8 +90,6 @@ namespace WebApp.Controllers.Users
 			return Ok(dto);
 		}
 
-
-
 		[HttpPut]
 		[Route("LoginUser")]
 		public async Task<IActionResult> LoginUser(LoginRequest request)
