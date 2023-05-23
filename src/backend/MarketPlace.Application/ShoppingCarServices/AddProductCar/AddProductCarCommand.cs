@@ -7,5 +7,5 @@ namespace CreditApp.Application.ShoppingCarServices.AddProductCar;
 public class AddProductCarCommand : IRequest<int>
 {
     public List<Claim> UserClaims { get; set; }
-    public int ProducId { get; set; }
+    public List<int> ProducId { get; set; }
 }
