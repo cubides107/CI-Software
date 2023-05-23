@@ -1,7 +1,7 @@
 using CreditApp.Application.ShoppingCarServices.GetShoppingCar;
 using MarketPlace.Domain;
 using MarketPlace.Domain.ProductEntities;
-using MarketPlace.Domain.ShoppingCar;
+using MarketPlace.Domain.ShoppingCarEntities;
 using MarketPlace.Domain.UserEntities;
 using MediatR;
 
@@ -11,13 +11,11 @@ public class AddProductCarHandler : IRequestHandler<AddProductCarCommand, int>
 {
 
     private readonly IRepository Repository;
-    private readonly IMapObject MapObject;
     private readonly ISecurity Security;
 
-    public AddProductCarHandler(IRepository repository, IMapObject mapObject, ISecurity security)
+    public AddProductCarHandler(IRepository repository, ISecurity security)
     {
         Repository = repository;
-        MapObject = mapObject;
         Security = security;
     }
     
@@ -25,21 +23,13 @@ public class AddProductCarHandler : IRequestHandler<AddProductCarCommand, int>
     {
         int userId = int.Parse(Security.GetClaim(request.UserClaims, claimType: ISecurity.USERID));
         int productId = request.ProducId;
-        bool exist = Repository.Exists<Product>(product => product.Id == userId);
+        bool exist = Repository.Exists<Product>(product1 => product1.Id == productId);
         Product product = null;
-        if (exist)
-        {
-             product = await Repository.Get<Product>(product => product.Id == userId);
-        }
-        else
-        {
-        }
+        if (exist) product = await Repository.Get<Product>(product2 => product2.Id == productId);
 
-        ShoppingCar shoppingCar = new ShoppingCar(
-            userId
-        );
+        ShoppingCar shoppingCar = new ShoppingCar(userId);
 
-        if (product != null) shoppingCar.Products.Add(product);
+        if (product != null) product.AddShoppingCar(shoppingCar);
 
         await Repository.Save(shoppingCar);
         await Repository.Commit();

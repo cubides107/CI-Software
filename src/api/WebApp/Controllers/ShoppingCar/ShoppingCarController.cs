@@ -18,7 +18,7 @@ public class ShoppingCarController : ControllerBase
     }
     
     [HttpPut]
-    [Route("RegisterProduct")]
+    [Route("AddProductCar")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     public async Task<IActionResult> AddProductCar(AddProductRequest request)
     {
@@ -27,7 +27,7 @@ public class ShoppingCarController : ControllerBase
             UserClaims = User.Claims.ToList(),
             ProducId = request.ProductId
         };
-
+        
         var dto = await Mediator.Send(command);
 
         return Ok(dto);

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketPlace.Infrastructure.Migrations
 {
     [DbContext(typeof(CreditAppContext))]
-    [Migration("20230521023756_ShoppingCar")]
-    partial class ShoppingCar
+    [Migration("20230522163244_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,9 +49,6 @@ namespace MarketPlace.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ShoppingCarId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
@@ -59,8 +56,6 @@ namespace MarketPlace.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ShoppingCarId");
 
                     b.HasIndex("UserId");
 
@@ -75,10 +70,15 @@ namespace MarketPlace.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ShoppingCars");
                 });
@@ -135,10 +135,6 @@ namespace MarketPlace.Infrastructure.Migrations
 
             modelBuilder.Entity("MarketPlace.Domain.ProductEntities.Product", b =>
                 {
-                    b.HasOne("MarketPlace.Domain.ShoppingCar.ShoppingCar", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ShoppingCarId");
-
                     b.HasOne("MarketPlace.Domain.UserEntities.User", null)
                         .WithMany("Products")
                         .HasForeignKey("UserId");
@@ -146,7 +142,14 @@ namespace MarketPlace.Infrastructure.Migrations
 
             modelBuilder.Entity("MarketPlace.Domain.ShoppingCar.ShoppingCar", b =>
                 {
-                    b.Navigation("Products");
+                    b.HasOne("MarketPlace.Domain.ProductEntities.Product", null)
+                        .WithMany("ShoppingCars")
+                        .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("MarketPlace.Domain.ProductEntities.Product", b =>
+                {
+                    b.Navigation("ShoppingCars");
                 });
 
             modelBuilder.Entity("MarketPlace.Domain.UserEntities.User", b =>

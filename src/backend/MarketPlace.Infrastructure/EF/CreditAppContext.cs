@@ -1,5 +1,5 @@
 ﻿using MarketPlace.Domain.ProductEntities;
-using MarketPlace.Domain.ShoppingCar;
+using MarketPlace.Domain.ShoppingCarEntities;
 using MarketPlace.Domain.UserEntities;
 using Microsoft.EntityFrameworkCore;
 
