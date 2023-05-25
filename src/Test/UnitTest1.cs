@@ -1,6 +1,10 @@
+using System.Security.Claims;
+using CreditApp.Application.ProductServices.GetProduct;
+using CreditApp.Application.ProductServices.RegisterProduct;
 using CreditApp.Application.UsersServices.LoginUser;
 using CreditApp.Application.UsersServices.RegisterUser;
 using MarketPlace.Domain;
+using MarketPlace.Domain.ProductEntities;
 using MarketPlace.Domain.UserEntities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -12,11 +16,13 @@ public class Tests
 {
     private readonly Mock<IRepository> userRepository;
     private readonly Mock<ISecurity> userSecurity;
-    
+    private readonly Mock<IMapObject> mapObject;
+
     public Tests()
     {
         userRepository = new Mock<IRepository>();
         userSecurity = new Mock<ISecurity>();
+        mapObject = new Mock<IMapObject>();
     }
     
     [SetUp]
@@ -78,6 +84,64 @@ public class Tests
 
        // Assert.Pass();
     }
+    
+    [TestMethod]
+    public async Task RegisterProduct()
+    {
+        var newToken = "jssuisjsuj8983j45.";
+        List<Claim> claims = new();
+
+        var userId = 1;
+        var request = new RegisterProductCommand()
+        {
+            Claims = claims,
+            Description = "Producto de test",
+            Reference = "234234",
+            Price = 234234,
+            Stock = 2
+        };
+
+        Product product = new Product("Test",234,"dsfsdf",2,"sdfsdf");
+        GetProductDTO getProductDto = new GetProductDTO();
+        
+        var password = "julian10";
+        var mail = "cristhiancubides84@gmail.com";
+        var cancelationToken = new CancellationToken();
+        var token = "jsusjsuj8983j45.";
+        var encryptPassword = "sfasdfwerfsdf";
+        var id = "1";
+        var name = "Julian";
+        var lastName = "Cubides";
+        var phone = "3138989123";
+        var address = "Carrera 1 Este #33-34";
+
+       
+        User user = new User("Julian cubides","cubides","cristian@gmailcom","sfasdfwerfsdf");
+        user.Products = new List<Product>();
+        User userUpdate = new("Julian cubides","cubides","cristian@gmailcom","sfasdfwerfsdf");
+        userUpdate.Token = token;
+       
+        userSecurity.Setup(x=>x.GetClaim(claims,ISecurity.USERID))
+            .Returns("1")
+            .Verifiable();
+        
+        userRepository.Setup(x => x.Get<User>(user1 => user1.Id == userId))
+            .ReturnsAsync(user)
+            .Verifiable();
+
+        mapObject.Setup(x => x.Map<Product, GetProductDTO>(product))
+            .Returns(getProductDto)
+            .Verifiable();
+        
+        var loginUserHandler = new RegisterProductHandler(userRepository.Object,mapObject.Object, userSecurity.Object);
+
+        var tokenResult = await loginUserHandler.Handle(request,cancelationToken);
+        
+        Assert.That(tokenResult == null);
+
+        // Assert.Pass();
+    }
+    
     /// <summary>
     /// Se comprueba cuando el usuario no se encuentra registrado
     /// </summary>
